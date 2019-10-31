@@ -1,0 +1,384 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100vh;
+  width: 100vw;
+}
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+a {
+  text-decoration: none;
+}
+
+$btn-size: 90px;
+$colors: (
+  'facebook': #3b5998,
+  'twitter': #3cf,
+  'youtube': #c4302b,
+  'instagram': #e95950,
+  'linkedin': #0e76a8
+);
+
+@mixin animate-bounce {
+  transition: all 0.35s cubic-bezier(0.31, -0.205, 0.43, 1.8);
+}
+
+.sleek__social {
+  background: #ecf0f1;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 33.33%;
+  text-align: center;
+
+  .btn {
+    @extend .btn__sleek--inactive;
+    display: inline-block;
+    background: #fff;
+    width: $btn-size;
+    height: $btn-size;
+    position: relative;
+    overflow: hidden;
+    border-radius: 28%;
+    box-shadow: 0 5px 50px 35px rgba(0, 0, 0, 0.1);
+
+    &::before {
+      @include animate-bounce;
+      content: '';
+      width: 125%;
+      height: 125%;
+      position: absolute;
+      top: -10%;
+      left: -10%;
+    }
+
+    .fab {
+      @include animate-bounce;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      font-size: 2.5rem;
+      line-height: $btn-size;
+    }
+
+    &:focus,
+    &:hover {
+      @extend .btn__sleek--active;
+    }
+  }
+
+  .btn__sleek--inactive {
+    @each $name, $color in $colors {
+      &.#{$name} {
+        &::before {
+          background: $color;
+        }
+        .fab {
+          color: $color;
+        }
+      }
+    }
+
+    &::before {
+      transform: translate(-100%, -100%) rotate(45deg);
+    }
+
+    .fab {
+      transform: scale(0.8);
+    }
+  }
+
+  .btn__sleek--active {
+    &::before {
+      transform: translate(-26%, -26%) rotate(45deg);
+    }
+    .fab {
+      color: #fff;
+      transform: scale(1);
+    }
+  }
+}
+
+.eight-bit__social {
+  background: #222a2c;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 33.33%;
+  text-align: center;
+
+  .btn {
+    display: inline-block;
+    background: #fff;
+    width: $btn-size;
+    height: $btn-size;
+    position: relative;
+    border-radius: 50%;
+    z-index: 1;
+
+    @each $name, $color in $colors {
+      &.#{$name} {
+        .fab {
+          color: $color;
+        }
+        span,
+        span::before,
+        span::after {
+          background: $color;
+        }
+      }
+    }
+
+    .fab {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      line-height: $btn-size;
+      font-size: 2.5rem;
+      transform: scale(0.8);
+      transition: all 0.35s;
+    }
+
+    .outside {
+      span {
+        position: absolute;
+        display: block;
+        opacity: 0;
+        transform: scale(0);
+
+        &::before,
+        &::after {
+          content: '';
+          position: absolute;
+          display: block;
+          width: 8px;
+          height: 8px;
+        }
+      }
+
+      span:nth-child(1),
+      span:nth-child(3) {
+        left: 25px;
+        width: 40px;
+        height: 8px;
+
+        &::before,
+        &::after {
+          width: 16px;
+        }
+      }
+
+      span:nth-child(2),
+      span:nth-child(4) {
+        top: 25px;
+        width: 8px;
+        height: 40px;
+
+        &::before,
+        &::after {
+          height: 16px;
+        }
+      }
+
+      span:nth-child(2)::before,
+      span:nth-child(4)::before,
+      span:nth-child(3)::before,
+      span:nth-child(3)::after {
+        top: -8px;
+      }
+
+      span:nth-child(1)::after,
+      span:nth-child(3)::after,
+      span:nth-child(4)::before,
+      span:nth-child(4)::after {
+        right: -8px;
+      }
+
+      span:nth-child(2)::after,
+      span:nth-child(4)::after,
+      span:nth-child(1)::before,
+      span:nth-child(1)::after {
+        bottom: -8px;
+      }
+
+      span:nth-child(1)::before,
+      span:nth-child(3)::before,
+      span:nth-child(2)::before,
+      span:nth-child(2)::after {
+        left: -8px;
+      }
+
+      span:nth-child(1) {
+        top: -4px;
+      }
+      span:nth-child(2) {
+        right: -4px;
+      }
+      span:nth-child(3) {
+        bottom: -4px;
+      }
+      span:nth-child(4) {
+        left: -4px;
+      }
+    }
+
+    .inside {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: -1;
+      overflow: hidden;
+      border-radius: 50%;
+
+      span {
+        position: relative;
+        display: block;
+        left: -15px;
+        height: 20px;
+        width: 0;
+
+        &::after {
+          content: '';
+          position: absolute;
+          display: block;
+          right: -10px;
+          width: 10px;
+          height: 10px;
+          background: #fff;
+        }
+      }
+
+      span:nth-child(odd) {
+        &::after {
+          background: rgba(#000, 0.4);
+        }
+      }
+
+      span:first-child {
+        left: -75px;
+        transition: all 0.3s steps(8);
+      }
+      span:nth-child(2) {
+        left: -45px;
+        transition: all 0.325s steps(8);
+      }
+      span:nth-child(3) {
+        left: -55px;
+        transition: all 0.35s steps(8);
+      }
+      span:nth-child(4) {
+        transition: all 0.4s steps(8);
+      }
+      span:nth-child(5) {
+        left: -25px;
+        transition: all 0.375s steps(8);
+      }
+    }
+
+    &:hover {
+      .fab {
+        color: #fff;
+        transform: scale(1);
+      }
+      .outside {
+        span {
+          opacity: 1;
+          transform: scale(1.15);
+        }
+        span:nth-child(1),
+        span:nth-child(3) {
+          transition: transform 0.3s 0.1s steps(8);
+        }
+        span:nth-child(2) {
+          transition: transform 0.3s 0.2s steps(8);
+        }
+        span:nth-child(4) {
+          transition: transform 0.3s steps(8);
+        }
+      }
+      .inside {
+        span:first-child {
+          width: calc(100% + 76px);
+        }
+        span:nth-child(2) {
+          width: calc(100% + 46px);
+          transition: all 0.375s steps(8);
+        }
+        span:nth-child(3) {
+          width: calc(100% + 56px);
+          transition: all 0.35s steps(8);
+        }
+        span:nth-child(4) {
+          width: calc(100% + 16px);
+          transition: all 0.3s steps(8);
+        }
+        span:nth-child(5) {
+          width: calc(100% + 26px);
+          transition: all 0.325s steps(8);
+        }
+      }
+    }
+  }
+}
+
+.glitchy__social {
+  background: #000;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 33.33%;
+  text-align: center;
+
+  .btn {
+    display: inline-block;
+    width: $btn-size;
+    height: $btn-size;
+    position: relative;
+
+    .fab {
+      color: #fff;
+      font-size: 4rem;
+      line-height: $btn-size;
+    }
+
+    &:focus .fab,
+    &:hover .fab {
+      animation: glitchy 200ms infinite;
+    }
+  }
+
+  @keyframes glitchy {
+    0% {
+      text-shadow: 5px 4px #f44336, -5px -6px #2196f3;
+    }
+    25% {
+      text-shadow: -5px -6px #f44336, 5px 4px #2196f3;
+    }
+    50% {
+      text-shadow: 5px -4px #f44336, -8px 4px #2196f3;
+    }
+    75% {
+      text-shadow: -8px -4px #f44336, -5px -4px #2196f3;
+    }
+    100% {
+      text-shadow: -5px 0 #f44336, 5px -4px #2196f3;
+    }
+  }
+}
